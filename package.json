@@ -1,0 +1,11 @@
+{
+  "name": "cy-e2eburguer",
+  "packageManager": "yarn@4.6.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "devDependencies": {
+    "cypress": "^13.17.0"
+  }
+}
