@@ -15,8 +15,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
-      - run: npm test
+          cache: 'yarn' # Habilita cache para dependências do Yarn
+      - run: yarn install # Instala as dependências
+      - run: yarn test # Substitua pelo comando de teste do seu projeto
 
   publish-gpr:
     needs: build
@@ -30,7 +31,10 @@ jobs:
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish
+          cache: 'yarn' # Habilita cache para dependências do Yarn
+      - run: yarn install # Instala as dependências antes de publicar
+      - run: yarn publish # Publica o pacote
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
