@@ -5,8 +5,8 @@ on:
     types: [created]
 
 jobs:
-  build:
-  
+ 
+ build:
     runs-on: ubuntu-latest
     steps:
       # Faz checkout do código
@@ -17,17 +17,17 @@ jobs:
         with:
           node-version: 22.13.0
 
-      # Habilita o Corepack e configura a versão correta do Yarn
-      - name: Enable Corepack and Setup Yarn
+      # Habilita o Corepack e configura o Yarn corretamente
+      - name: Setup Corepack and Yarn
         run: |
           corepack enable
           corepack prepare yarn@4.6.0 --activate
 
-      # Verifica a versão correta do Yarn para debug
+      # Verifica a versão do Yarn (para debug)
       - name: Check Yarn Version
         run: yarn --version
 
-      # Instala dependências com o Yarn correto
+      # Instala dependências usando o Yarn correto
       - name: Install Dependencies
         run: yarn install
 
@@ -36,4 +36,5 @@ jobs:
         run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
