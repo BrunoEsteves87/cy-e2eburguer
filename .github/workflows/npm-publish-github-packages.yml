@@ -23,11 +23,15 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
-      # Configura a versão correta do Yarn
-      - name: Use Specific Yarn Version
+      # Garante que a versão do Yarn especificada será usada
+      - name: Activate Yarn 4.6.0
         run: corepack prepare yarn@4.6.0 --activate
 
-      # Instala as dependências usando o Yarn correto
+      # Verifica a versão do Yarn (para debug)
+      - name: Check Yarn Version
+        run: yarn --version
+
+      # Instala dependências usando a versão correta do Yarn
       - name: Install Dependencies
         run: yarn install
 
@@ -55,11 +59,15 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
-      # Configura a versão correta do Yarn
-      - name: Use Specific Yarn Version
+      # Garante que a versão do Yarn especificada será usada
+      - name: Activate Yarn 4.6.0
         run: corepack prepare yarn@4.6.0 --activate
 
-      # Instala as dependências usando o Yarn correto
+      # Verifica a versão do Yarn (para debug)
+      - name: Check Yarn Version
+        run: yarn --version
+
+      # Instala dependências usando a versão correta do Yarn
       - name: Install Dependencies
         run: yarn install
 
@@ -68,6 +76,7 @@ jobs:
         run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
 
 
