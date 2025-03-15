@@ -16,24 +16,25 @@ jobs:
         with:
           node-version: 22.13.0
 
-      # Instala o Corepack e garante o uso da versão correta do Yarn
-      - name: Setup Corepack and Yarn
+      # Ativa o Corepack e configura o Yarn 4.6.0
+      - name: Enable Corepack and Set Yarn
         run: |
           corepack enable
           corepack prepare yarn@4.6.0 --activate
-          yarn set version 4.6.0
+          echo "nodeLinker: node-modules" >> .yarnrc.yml
 
-      # Verifica a versão do Yarn para debug
+      # Verifica a versão do Yarn
       - name: Verify Yarn Version
         run: yarn --version
 
-      # Instala as dependências com o Yarn correto
+      # Instala dependências
       - name: Install Dependencies
         run: yarn install
 
       # Executa os testes com Cypress
       - name: Run Cypress Tests
         run: yarn cypress run --headless --browser chrome
+
 
 
 
