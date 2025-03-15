@@ -1,7 +1,6 @@
 # This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
 # For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
-name: primeiro job
+name: Cypress CI/CD Pipeline
 
 on:
   release:
@@ -11,13 +10,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Faz checkout do código
       - uses: actions/checkout@v4
+
+      # Configura o Node.js
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'yarn' # Cache para Yarn
-      - run: yarn install # Instala dependências usando Yarn
-      - run: yarn test # Substitua pelo comando de teste do seu projeto
+          cache: 'yarn'
+
+      # Instala dependências
+      - name: Install Dependencies
+        run: yarn install
+
+      # Executa os testes com Cypress
+      - name: Run Cypress Tests
+        run: yarn cypress run
 
   publish-gpr:
     needs: build
@@ -26,16 +34,26 @@ jobs:
       contents: read
       packages: write
     steps:
+      # Faz checkout do código
       - uses: actions/checkout@v4
+
+      # Configura o Node.js
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
           cache: 'yarn'
-      - run: yarn install
-      - run: yarn publish
+
+      # Instala dependências
+      - name: Install Dependencies
+        run: yarn install
+
+      # Publica o pacote no GitHub Packages
+      - name: Publish Package
+        run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
 
 
