@@ -1,0 +1,38 @@
+name: Cypress CI/CD Pipeline
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Faz checkout do código
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Configura o Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.13.0
+
+      # 3. Habilita o Corepack e ativa a versão correta do Yarn
+      - name: Enable Corepack and Configure Yarn
+        run: |
+          corepack enable
+          corepack prepare yarn@4.6.0 --activate
+
+      # 4. Valida a versão do Yarn (para debug nos logs)
+      - name: Check Yarn Version
+        run: yarn --version
+
+      # 5. Instala dependências usando o Yarn correto
+      - name: Install Dependencies
+        run: yarn install
+
+      # 6. Executa os testes com Cypress
+      - name: Run Cypress Tests
+        run: yarn cypress run --headless --browser chrome
+
