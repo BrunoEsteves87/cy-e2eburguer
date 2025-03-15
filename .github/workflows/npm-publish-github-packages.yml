@@ -14,20 +14,20 @@ jobs:
       # Faz checkout do código
       - uses: actions/checkout@v4
 
-      # Configura o Node.js
+      # Configura o Node.js na versão especificada
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22.13.0
 
       # Habilita o Corepack
       - name: Enable Corepack
         run: corepack enable
 
-      # Garante que a versão do Yarn especificada será usada
-      - name: Activate Yarn 4.6.0
+      # Configura a versão correta do Yarn
+      - name: Activate Yarn Version 4.6.0
         run: corepack prepare yarn@4.6.0 --activate
 
-      # Verifica a versão do Yarn (para debug)
+      # Verifica a versão do Yarn para garantir que está correto
       - name: Check Yarn Version
         run: yarn --version
 
@@ -37,45 +37,8 @@ jobs:
 
       # Executa os testes com Cypress
       - name: Run Cypress Tests
-        run: yarn cypress run
+        run: yarn cypress run --headless --browser chrome
 
-  publish-gpr:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      # Faz checkout do código
-      - uses: actions/checkout@v4
-
-      # Configura o Node.js
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: https://npm.pkg.github.com/
-
-      # Habilita o Corepack
-      - name: Enable Corepack
-        run: corepack enable
-
-      # Garante que a versão do Yarn especificada será usada
-      - name: Activate Yarn 4.6.0
-        run: corepack prepare yarn@4.6.0 --activate
-
-      # Verifica a versão do Yarn (para debug)
-      - name: Check Yarn Version
-        run: yarn --version
-
-      # Instala dependências usando a versão correta do Yarn
-      - name: Install Dependencies
-        run: yarn install
-
-      # Publica o pacote no GitHub Packages
-      - name: Publish Package
-        run: yarn publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
 
