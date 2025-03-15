@@ -7,38 +7,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      # Faz checkout do código
+
       - uses: actions/checkout@v4
 
-      # Configura o Node.js na versão especificada
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22.13.0
-
-      # Ativa o Corepack e configura o Yarn 4.6.0
-      - name: Enable Corepack and Set Yarn
+      - name: Enable Corepack
         run: |
           corepack enable
           corepack prepare yarn@4.6.0 --activate
-          echo "nodeLinker: node-modules" >> .yarnrc.yml
-
-      # Verifica a versão do Yarn
-      - name: Verify Yarn Version
+      - name: Check Yarn Version
         run: yarn --version
-
-      # Instala dependências
+      
       - name: Install Dependencies
         run: yarn install
-
-      # Executa os testes com Cypress
+      
       - name: Run Cypress Tests
-        run: yarn cypress run --headless --browser chrome
-
-
-
-
-
-
-
-
+        run: yarn cypress run --headless --browser chrom
