@@ -1,6 +1,5 @@
 # This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
 # For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
 name: Cypress CI/CD Pipeline
 
 on:
@@ -19,25 +18,24 @@ jobs:
         with:
           node-version: 22.13.0
 
-      # Habilita o Corepack
-      - name: Enable Corepack
-        run: corepack enable
+      # Ativa o Corepack
+      - name: Enable and Configure Corepack
+        run: |
+          corepack enable
+          corepack prepare yarn@4.6.0 --activate
 
-      # Configura a versão correta do Yarn
-      - name: Activate Yarn Version 4.6.0
-        run: corepack prepare yarn@4.6.0 --activate
-
-      # Verifica a versão do Yarn para garantir que está correto
+      # Verifica a versão correta do Yarn
       - name: Check Yarn Version
         run: yarn --version
 
-      # Instala dependências usando a versão correta do Yarn
+      # Instala as dependências
       - name: Install Dependencies
         run: yarn install
 
       # Executa os testes com Cypress
       - name: Run Cypress Tests
         run: yarn cypress run --headless --browser chrome
+
 
 
 
