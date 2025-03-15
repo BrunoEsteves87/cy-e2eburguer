@@ -19,14 +19,15 @@ jobs:
         with:
           node-version: 20
 
-      # Habilita o Corepack e configura a versão correta do Yarn
+      # Habilita o Corepack
       - name: Enable Corepack
         run: corepack enable
 
+      # Configura a versão correta do Yarn
       - name: Use Specific Yarn Version
         run: corepack prepare yarn@4.6.0 --activate
 
-      # Instala dependências com a versão correta do Yarn
+      # Instala as dependências usando o Yarn correto
       - name: Install Dependencies
         run: yarn install
 
@@ -50,14 +51,15 @@ jobs:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
 
-      # Habilita o Corepack e configura a versão correta do Yarn
+      # Habilita o Corepack
       - name: Enable Corepack
         run: corepack enable
 
+      # Configura a versão correta do Yarn
       - name: Use Specific Yarn Version
         run: corepack prepare yarn@4.6.0 --activate
 
-      # Instala dependências com a versão correta do Yarn
+      # Instala as dependências usando o Yarn correto
       - name: Install Dependencies
         run: yarn install
 
@@ -66,5 +68,6 @@ jobs:
         run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
 
